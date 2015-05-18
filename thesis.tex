@@ -1,0 +1,94 @@
+%\documentclass[final,subfig,blackref,approvalform]{drexel-thesis} %final copy
+\documentclass[final,subfig,blackref,approvalform]{drexel-thesis} %final copy
+%\documentclass[daring,subfig,blackref,draftspace]{drexel-thesis} %for committee
+%\documentclass[daring,subfig,blackref,draftwatermark,draftspace]{drexel-thesis} %draft copy
+
+%swap margins so the wide one is down the binding edge when printing double sided
+%only use this with twoside
+%\let\tmp\oddsidemargin
+%\let\oddsidemargin\evensidemargin
+%\let\evensidemargin\tmp
+%\reversemarginpar
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{placeins}   % To allow pictures to flush after a section
+\usepackage{setspace}
+\usepackage{nth}
+% \usepackage{tikz}
+\usepackage{natbib}
+\usepackage{multirow}
+\usepackage{array}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% fncychap clobbers \appendix with a silly implementation that breaks
+% hyperlinks to appendix chapters.  Work around this by ignoring their
+% implementation completely.
+%\let\temporaryAppendix\appendix
+%\usepackage[Conny]{fncychap}  % Nicer style used for distribution
+%\usepackage[]{fncychap}
+%\let\appendix\temporaryAppendix
+
+%\usepackage[left]{showlabels}
+
+\author{Jonathan F. Miller}
+\title{TITLE}
+\DUTmonth{MONTH}
+\DUTyear{2015}
+\degree{Doctor of Philosophy}
+\advisor{Joshua Jacobs, Ph.D.}
+% \includegra
+% \copyrighttext{}
+
+
+\renewcommand{\footrulewidth}{0pt}
+\fancyfoot[RE,LO]{}
+\fancyfoot[LE,RO]{}
+
+\begin{document}
+
+\include{tex/preamble}
+
+\begin{thesis}
+  % \pdfbookmark[-1]{Main Matter}{Main Matter}
+  % \ifdaring{\setstretch{1.3}}{}
+  %\ifdaring{\setstretch{1.3}}{\setstretch{1.3}}
+  
+    %CHAPTER: Introduction
+    \include{tex/Introduction}
+
+    \chapter{Neural Activity in Human Hippocampal Formation Reveals the Spatial Context of Retrieved Memories}
+    \begin{quotation}
+    \singlespacing
+    \noindent Jonathan F. Miller, Markus Neufang, Alec Solway, Armin Brandt, Michael Trippel, Irina Mader, Stefan Hefft, Max Merkow, Sean M.  Polyn, Joshua Jacobs, Michael J. Kahan, \& Andreas Schulze-Bonhage  \\ \textit{Science}
+    \end{quotation}
+    \input{tex/dboy/main}
+
+    \chapter{Repeating spatial activations in human entorhinal cortex}
+    \begin{quotation}
+    \singlespacing
+    \noindent Jonathan F. Miller, Itzhak Fried, Nanthia Suthana, \& Joshua Jacobs \\ \textit{Current Biology}
+    \end{quotation}
+    \input{tex/linearGrids/main}
+	
+    \chapter{TRAIN EXPERIMENT}
+    \begin{quotation}
+    \singlespacing
+    \noindent Jonathan F. Miller \& Joshua Jacobs \\
+    \end{quotation}	
+
+
+  
+\end{thesis}
+
+\bibliographystyle{unsrtnat} 
+\bibliography{memlab}
+
+% \appendix
+% \include{tex/appendix}
+% \include{tex/CV}
+
+\end{document}
