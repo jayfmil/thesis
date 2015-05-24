@@ -72,8 +72,17 @@ In contrast to the large volume of work describing the neural representation of 
 
 \section{Episodic memory and spatiotemporal context}
 
+Space is an intuitively vital aspect of our episodic memories. The events that we experience in our lives necessarily occur at a particular time, with particular surroundings, and at a particular location. This can be framed more formally by saying that events take place within a \textit{spatiotemporal} context, such that we can remember both where and when an event occurred \citep{Eich04}. Yet, throughout the history of episodic memory experiments, the study of the role played by spatial information has largely been ignored. In general, episodic memory experiments present study participants with lists of words or pictures to encode so that they can later be recalled or recognized, devoid of any spatial information. Thus, a major drawback of these traditional methods is that they lack a sense of real world ecological validity, as it has been shown that spatial information is a key element in memory formation, organization, and retrieval \citep{MillEtal12a}. To overcome this limitation of previous studies, all of the work I will present makes use of virtual environments to extend experiments into three dimensions, allowing for the study of the neural representation of space, memory, and their interactions.
 
+\paragraph{Virtual navigation} 
 
+To study the neural representations of space in the rodent, researchers generally record from a freely moving animal that is tethered to a recording system. Unfortunately for human research, the ability to record from the human brain comes with the cost of limited mobility. When hospital patients perform iEEG experiments, they are either resting in their bed or sitting in their chair. To overcome this restriction, we create visually rich 3D environments that participants navigate on a laptop computer. While virtual tasks lack the locomotive and proprioceptive feedback of real navigation, previous studies of both rodent \citep{HarvEtal09,ChenEtal13} and human \citep{EkstEtal03,JacoEtal10,JacoEtal13} spatial navigation have revealed that virtual navigation is sufficient to elicit neural responses similar to actual navigation in rodents. In addition, though we lose certain attributes of real world navigation, we gain the capability to precisely design and control the virtual environments to our exact specifications.
+
+The virtual environments that I will describe were created using the Panda Experiment Programming Library (PandaEPL), which is an open source 3D experiment platform \citep{SolwEtal13}. PandaEPL allows for the construction of freely navigable 3D environments, and importantly, incorporates extremely precise logging to accurately align patient activity in the task with the neural data.
+
+% Much of the work discussed in this dissertation attempts to help us understand how the human brain supports episodic memory, with a focus on the spatial component of memory episodes.
+
+% place cells can thought of in a memory orientated way
 
 % \section{From rodents to humans}
 
@@ -81,7 +90,14 @@ In contrast to the large volume of work describing the neural representation of 
 
 \section{Overview}
 
-In chapter 2, I take what (limited) knowledge of what we know about the human neural representation of space and show how it fits into models of memory function.
+% episodic memory important, can only really be tested in humans
+We are all defined by our episodic memories, of which space is a core component. This is perhaps most evident when considering the profound effects of neurodegenerative diseases such as Alzheimer's, where the loss of memory function, along with spatial disorientation, are primary symptoms. As we move through space and time, we are constantly encoding new memories for later retrieval, transforming the events of our lives into patterns of brain activity. Understanding the neural underpinnings of this process is a lofty yet fundamental goal of neuroscience.
+% and it is a goal that can only truly be accomplished through the study of the human brain. Whether or not any animals possess episodic memory in a manner that is on par with humans is an open debate \citep{ClayEtal03}, yet is is hard to dispute the fact that only humans possess the combination of episodic memory, language, and communication abilities necessary for performing in-depth experiments of memory function.
+Whether or not any animals possess episodic memory in a manner that is on par with humans is an open debate \citep{ClayEtal03}, yet is is hard to dispute the claim that, due to our combination of episodic memory, language, and communication abilities, this goal that can only truly be accomplished through the study of the human brain.
+
+
+
+In \textbf{Chapter 2}, I take what (limited) knowledge of what we know about the human neural representation of space and show how it fits into models of memory function.
 
 In chapter 3, I extend our knowledge of the human neural representation of space, which further links rodent and human literature and gives us insight into the precise roles of MTL regions. New cell type is a key advancement of the field.
 
