@@ -20,6 +20,7 @@
 \usepackage{multirow}
 \usepackage{array}
 \usepackage{soul}
+\usepackage{import}
 
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
@@ -44,7 +45,7 @@
 % \includegra
 % \copyrighttext{}
 
-
+\renewcommand\cite{\citep}
 \renewcommand{\footrulewidth}{0pt}
 \fancyfoot[RE,LO]{}
 \fancyfoot[LE,RO]{}
@@ -78,11 +79,17 @@
     \input{tex/linearGrids/main}
 	
     % CHAPTER 4: Miller et al., 2015, in preparation  
-    \chapter{TRAIN EXPERIMENT}
+    \chapter{Human hippocampal theta and its relationship to speed, memory, and voluntary movement}
     \begin{quotation}
     \singlespacing
     \noindent Jonathan F. Miller \& Joshua Jacobs \\
     \end{quotation}	
+
+    % this is because I'm still working on train
+    \section{Abstract}
+    \input{tex/train/abstract}
+    \subimport{tex/train/}{main.tex}
+    
 
     % CHAPTER 5: General discussion
     \include{tex/Discussion}
@@ -91,7 +98,7 @@
   
 \end{thesis}
 
-\bibliographystyle{unsrtnat} 
+\bibliographystyle{plainnat} 
 \bibliography{./memlab}
 
 % \appendix
