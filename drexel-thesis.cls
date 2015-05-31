@@ -8,7 +8,7 @@
 %% 
 %% This is a generated file.
 %% 
-%% Copyright (C) 2010 W. Trevor King
+%% Copyright (C) 2010-2012 W. Trevor King
 %% 
 %% This file may be distributed and/or modified under the conditions of
 %% the LaTeX Project Public License, either version 1.3 of this license
@@ -20,14 +20,15 @@
 %% and version 1.3 or later is part of all distributions of LaTeX version
 %% 2003/06/01 or later.
 %% 
-\def\fileversion{0.14}
-\def\filedate{2010/09/21}
+\def\fileversion{0.15}
+\def\filedate{2013/05/21}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{drexel-thesis}
  [\filedate\ \fileversion\ Drexel Thesis]
 \RequirePackage{xkeyval}
 \newif\if@mainmatter \@mainmattertrue
 \newif\if@DUT@subfigopt
+\newif\if@DUT@pagebreak
 \newif\if@dottedchapter
 \newif\if@boldchapter
 \newif\if@boldpart
@@ -35,13 +36,17 @@
 \newif\if@indenttoc
 \newif\if@blackref
 \newif\if@draftwatermark
-\newif\if@mydraftwatermark
+\newif\if@xdraftwatermark
 \newif\if@indentfirst
 \newif\if@final
 \newif\if@daring
 \newif\if@approvalform
 \newcommand\iffinal[2]{\if@final #1\else #2\fi}
+\let\DUTiffinal\iffinal
+\newcommand\ifdraftwatermark[2]{\if@draftwatermark #1\else #2\fi}
+\let\DUTifdraftwatermark\ifdraftwatermark
 \newcommand\ifdaring[2]{\if@daring #1\else #2\fi}
+\let\DUTifdaring\ifdaring
 \newcommand\DUT@makeapprovalform{
   \thispagestyle{empty}
   \begingroup
@@ -477,6 +482,13 @@
   \def\@ssp{1} % single space
   \def\@dsp{1} % double space
   \def\@tsp{2} % triple space
+}
+\DeclareOptionX{pagebreak}{
+  \@DUT@pagebreaktrue
+  \PassOptionsToClass{openright}{book}
+}
+\DeclareOptionX{nopagebreak}{
+  \@DUT@pagebreakfalse
   \PassOptionsToClass{openany}{book}
 }
 \DeclareOptionX{dottedpart}{\@dottedparttrue}
@@ -495,10 +507,13 @@
 \DeclareOptionX{blackref}{\@blackreftrue}
 \DeclareOptionX{draftwatermark}{%
   \@draftwatermarktrue
-  \@mydraftwatermarkfalse}
-\DeclareOptionX{mydraftwatermark}{%
-  \@mydraftwatermarktrue
-  \@draftwatermarkfalse}
+  \@xdraftwatermarkfalse}
+\DeclareOptionX{xdraftwatermark}{%
+  \@draftwatermarkfalse
+  \@xdraftwatermarktrue}
+ \DeclareOptionX{nodraftwatermark}{%
+  \@draftwatermarkfalse
+  \@xdraftwatermarkfalse}
 \DeclareOptionX{indentfirst}{\@indentfirsttrue}
 \DeclareOptionX{oneside}{\PassOptionsToClass{oneside}{book}}
 \DeclareOptionX{twoside}{\PassOptionsToClass{twoside}{book}}
@@ -506,14 +521,16 @@
   \@finaltrue
   \setkeys{drexel-thesis.cls}{oneside}
   \setkeys{drexel-thesis.cls}{finalspace}
+  \setkeys{drexel-thesis.cls}{pagebreak}
   \setkeys{drexel-thesis.cls}{dottedtoc}
 }
 \DeclareOptionX{draft}{
   \@finalfalse
   \setkeys{drexel-thesis.cls}{twoside}
   \setkeys{drexel-thesis.cls}{draftspace}
+  \setkeys{drexel-thesis.cls}{nopagebreak}
   \setkeys{drexel-thesis.cls}{dottedtoc}
-  \setkeys{drexel-thesis.cls}{mydraftwatermark}
+  \setkeys{drexel-thesis.cls}{xdraftwatermark}
 }
 \DeclareOptionX{daring}{
   \@daringtrue
@@ -532,7 +549,7 @@
   \RequirePackage[draft,allpages,mark={DRAFT \today},
                   fontsize=2cm,grayness=0.9]{draftmark}
 \fi
-\if@mydraftwatermark
+\if@xdraftwatermark
   \RequirePackage{eso-pic}
   \RequirePackage{xcolor}
   \definecolor{watermark}{rgb}{0.9,0.9,0.9}
@@ -696,15 +713,19 @@
     \def\@svsechd{#4{\hskip #1\relax #5}}%
   \fi
   \@xsect{#3}}
-\newcommand\@DUT@clearpage{\if@final \clearpage \fi}
-\newcommand\@DUT@cleardoublepage{\if@final \cleardoublepage \fi}
+\newcommand\@DUT@clearpage{%
+  \if@DUT@pagebreak \clearpage \else \blanklinesp{4} \fi}
+\newcommand\@DUT@cleardoublepage{%
+  \if@DUT@pagebreak \cleardoublepage \else \blanklinesp{4} \fi}
+\newcommand\@DUT@newpage{%
+  \if@DUT@pagebreak \newpage \else \blanklinesp{4} \fi}
 \newcommand\@DUT@blankpage{%
-  \if@final
+  \if@DUT@pagebreak
     \@DUT@clearpage
     \thispagestyle{empty}
     \hphantom{0}
     \@DUT@clearpage
-  \else\fi
+  \fi
 }
 \newlength\@DUT@blanklines@length
 \newcommand{\@blanklines@setup}[1]{%
@@ -746,7 +767,7 @@
       \pdfbookmark[-1]{Front Matter}{Front Matter}
       \pdfbookmark[0]{Title Page}{Title Page}
     \fi
-    \if@final \vspace*{\fill} \fi
+    \if@DUT@pagebreak \vspace*{\fill} \fi
     \begin{center}%
       {\setstretch{\@tsp} \bfseries \@DUT@title \par}%
       \blanklines{\@tsp}%
@@ -763,7 +784,10 @@
       \@DUT@degree\\
       \@DUT@month\ \@DUT@year
     \end{center}\par
-    \if@final \vspace*{\fill} \fi
+    \if@DUT@pagebreak \vspace*{\fill}
+    \centering
+    \mbox{\smash{\includegraphics[width=4cm]{drexel-logo}}}
+    \fi
   \end{@DUT@titlepage}%
   \setcounter{footnote}{0}%
   \global\let\maketitle\relax
@@ -772,20 +796,20 @@
 \newcommand\@DUT@makecopyright{%
   \@DUT@clearpage
   \ifpdf \pdfbookmark[0]{Copyright Page}{Copyright Page} \fi
-  \if@final \vspace*{\fill} \fi
+  \if@DUT@pagebreak \vspace*{\fill} \fi
   \begin{center}
     \copyright~Copyright \@DUT@year\\
     \@DUT@author.  \@DUT@copyrighttext
   \end{center}
-  \if@final \vspace*{\fill} \else \blanklinesp{2} \fi
+  \if@DUT@pagebreak \vspace*{\fill} \fi
   \thispagestyle{empty}
 }
 \newcommand\copyrighttextCCBYSA{
   \begin{quote}
     This work is licensed under the terms of the Creative Commons
-    Attribution-ShareAlike license Version 3.0.  The license is
+    Attribution-ShareAlike 4.0 International license.  The license is
     available at \\
-    \url{http://creativecommons.org/licenses/by-sa/3.0/}.
+    \url{http://creativecommons.org/licenses/by-sa/4.0/}.
   \end{quote}
 }
 \let\DUTcopyrighttextCCBYSA\copyrighttextCCBYSA
@@ -816,7 +840,7 @@
   \fi
   \thispagestyle{plain}%
   \@tempswafalse
-  \if@final \null\vfil \fi
+  \if@DUT@pagebreak \null\vfil \fi
   \secdef\@part\@spart}
 \def\@part[#1]#2{%
     \ifnum \c@secnumdepth >-2\relax
@@ -844,7 +868,7 @@
      \large \bfseries #1\par}%
     \@endpart}
 \def\@endpart{
-  \if@final \vfil\newpage \fi
+  \if@DUT@pagebreak \vfil\newpage \fi
   \if@twoside
     \if@openright
       \null
@@ -1010,9 +1034,8 @@
 \let\DUTvita\vita
 \let\endDUTvita\endvita
 \renewenvironment{titlepage}%
-  {\thispagestyle{empty}%
-    \setcounter{page}\z@}%
-  {\if@final \newpage \else \blanklinesp{2} \par \fi}
+  {\thispagestyle{empty}\setcounter{page}\z@}%
+  {\@DUT@newpage}
 \let\@DUT@titlepage\titlepage
 \let\end@DUT@titlepage\endtitlepage
 \let\@DUT@appendix\appendix
@@ -1055,7 +1078,6 @@
 \if@dottedchapter \renewcommand{\cftchapdotsep}{\cftdotsep}
 \else             \renewcommand{\cftchapdotsep}{\cftnodots} \fi
 \renewcommand{\cftchappagefont}{\DUT@toc@page@font}
-
 \setlength\cftbeforesecskip{\l@DUT@toc@sep}
 \cftsetindents{section}{0pt}{3em}
 \renewcommand{\cftsecfont}{\DUT@toc@low@font}
@@ -1076,7 +1098,6 @@
 \fi
 \renewcommand\cftloftitlefont{\listed@schapter}
 \setlength\cftafterloftitleskip{-12pt}
-
 \setlength{\cftbeforefigskip}{\l@DUT@toc@sep}
 \setlength{\cftfigindent}{0pt}
 \renewcommand{\cftfigfont}{\DUT@toc@low@font}
